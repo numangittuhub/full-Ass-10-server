@@ -7,10 +7,9 @@ const contributionSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
-  phone: String,
-  address: String,
-  date: { type: Date, default: Date.now }
+  phone: { type: String, required: true },
+  address: { type: String, required: true },
+  date: { type: Date, default: Date.now },
 });
 
-const Contribution = mongoose.model("Contribution", contributionSchema);
-export default Contribution;
+export default mongoose.model("Contribution", contributionSchema);

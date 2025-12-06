@@ -4,18 +4,19 @@ import Contribution from "../models/Contribution.js";
 
 const router = express.Router();
 
-// POST - নতুন কন্ট্রিবিউশন
+// POST - নতুন কন্ট্রিবিউশন সেভ করা
 router.post("/", async (req, res) => {
   try {
     const newContribution = new Contribution(req.body);
     await newContribution.save();
     res.status(201).json(newContribution);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Contribution save error:", error);
+    res.status(500).json({ message: "Failed to save contribution" });
   }
 });
 
-// GET - নিজের কন্ট্রিবিউশন
+// GET - নিজের সব কন্ট্রিবিউশন দেখা
 router.get("/my/:email", async (req, res) => {
   try {
     const contributions = await Contribution.find({ 
@@ -23,7 +24,8 @@ router.get("/my/:email", async (req, res) => {
     }).sort({ date: -1 });
     res.json(contributions);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("Get contributions error:", error);
+    res.status(500).json({ message: "Failed to fetch contributions" });
   }
 });
 
